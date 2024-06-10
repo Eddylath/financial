@@ -1,0 +1,110 @@
+@import "./styles/utility.scss";
+
+.topbar {
+    column-gap: $tu-gutter;
+    padding: tu-gutter(2, 3);
+
+    .search-bar {
+        border: 1px solid $blue-130;
+        background-color: $blue-105;
+        display: flex;
+        color: $gray-300;
+        padding: tu-gutter(0.75);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: $form-border-radius-field;
+        column-gap: 12px;
+
+        &-input {
+            border: none;
+            outline: none;
+            width: -webkit-fill-available;
+            background-color: $blue-105;
+        }
+    }
+
+    .end-button {
+        margin-left: auto;
+        width: auto;
+    }
+}
+
+.data-table {
+    padding: tu-gutter(0, 2.25);
+}
+
+.master-table {
+    th {
+        background-color: $gray-115;
+    }
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: tu-gutter(1);
+    color: $gray-1200;
+
+    .form-input {
+        background-color: white;
+        border: 1px solid $gray-130;
+        height: $form-primary-field-height;
+        border-radius: $form-border-radius-field;
+        padding: tu-gutter(0.5);
+    }
+
+    .form-date {
+        background-color: white;
+        border: 1px solid $gray-130;
+        display: flex;
+        height: $form-primary-field-height;
+        color: $gray-300;
+        padding: 0 12px;
+        border-radius: $form-border-radius-field;
+
+        &-input {
+            border: none;
+            outline: none;
+            width: -webkit-fill-available;
+            background-color: white;
+        }
+    }
+
+    .error {
+        border: 1px solid $red-500;
+    }
+}
+
+.btn-secondary,
+.btn-secondary:hover {
+    background-color: white;
+    color: $blue-700;
+    border: 1px solid $blue-130;
+}
+
+.btn-icon {
+    border: none;
+    background: none;
+}
+
+.icon-sm {
+    height: 18px;
+}
+
+.align-end {
+    text-align: end;
+}
+
+.filter-list {
+    line-height: 3;
+    width: 150px;
+}
+
+.atomic-dropdown {
+    width: 150px;
+    outline: auto $gray-130;
+    padding: tu-gutter(0.5);
+}
+
+.flex {
+    display: flex;
+}

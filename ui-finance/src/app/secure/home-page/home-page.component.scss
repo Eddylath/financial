@@ -1,0 +1,44 @@
+@use "../../app.component.scss" as *;
+
+mat-sidenav {
+    width: 225px;
+    background-color: $gray-105;
+}
+
+mat-action-list {
+    padding-top: tu-gutter(2);
+}
+
+mat-list-item {
+    cursor: pointer;
+}
+
+mat-icon {
+    fill: $purple-500;
+}
+
+mat-sidenav-content {
+    background-color: white;
+    overflow-x: hidden;
+}
+
+.home-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.header-image {
+    padding: tu-gutter(0.75);
+}
+
+.active span{
+      color: $purple-500;
+}
+
+.list-name {
+    padding: tu-gutter(0.5);
+    vertical-align: top;
+}

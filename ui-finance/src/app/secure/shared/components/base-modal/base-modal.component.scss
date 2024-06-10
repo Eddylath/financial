@@ -1,0 +1,35 @@
+@use "../../../../app.component.scss" as *;
+
+.modal-body {
+    height: auto;
+    max-height: 650px;
+    width: 1000px;
+}
+
+.small-width {
+    width: 700px;
+}
+
+.modal-header {
+    border-bottom: 1px solid $gray-115;
+    color: $gray-950;
+    display: flex;
+    padding: 16px;
+}
+
+mat-icon {
+    fill: $gray-500;
+}
+
+h1 {
+    margin: 0;
+}
+
+mat-dialog-content {
+    max-height: 100%;
+    overflow: auto;
+}
+
+.tu-modal-content {
+    overflow: auto;
+}

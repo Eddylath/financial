@@ -1,0 +1,138 @@
+<div *ngIf="contractAdded; else addContract" [formGroup]="customerContractForm">
+    <div class="close-form">
+        <button
+            class="btn-icon"
+            type="button"
+            (click)="toggleContractForm()"
+        >
+            <mat-icon svgIcon="close"></mat-icon>
+        </button>
+    </div>
+    <div formGroupName="contract">
+        <div class="input-field">
+            <mat-label>{{ translations['customerForm']['contractName'] }}</mat-label>
+            <input
+                formControlName="contractName"
+                [ngClass]="{'error': isFieldInvalid('contractName')}"
+                class="form-input"
+                placeholder="{{ translations['customerForm']['contractNamePlaceholder'] }}"
+                type="text"
+                matInput
+            >
+        </div>
+        <div class="double-input">
+            <div class="input-field">
+                <mat-label>{{ translations['customerForm']['contractStartDate'] }}</mat-label>
+                <div
+                    [ngClass]="{'error': isFieldInvalid('contractStartDate')}"
+                    class="form-date"
+                >
+                    <input
+                        class="form-date-input"
+                        [matDatepicker]="start"
+                        placeholder="{{ translations['common']['datePlaceholder'] }}"
+                        matInput
+                        formControlName="contractStartDate"
+                        tuUtcValue
+                    >
+                    <mat-datepicker-toggle matIconSuffix [for]="start"></mat-datepicker-toggle>
+                    <mat-datepicker #start></mat-datepicker>
+                </div>
+                <mat-error
+                    class="start-date-error-container"
+                    *ngIf="customerContractForm.get('contract.contractStartDate')?.hasError('dateRangeError')"
+                >
+                    {{ translations['errorMessages']['dateRangeError'] }}
+                </mat-error>
+            </div>
+            <div class="input-field">
+                <mat-label>{{ translations['customerForm']['contractEndDate'] }}</mat-label>
+                <div
+                    [ngClass]="{'error': isFieldInvalid('contractEndDate')}"
+                    class="form-date"
+                >
+                    <input
+                        class="form-date-input"
+                        [matDatepicker]="end"
+                        placeholder="{{ translations['common']['datePlaceholder'] }}"   
+                        matInput
+                        formControlName="contractEndDate"
+                        tuUtcValue
+                    >
+                    <mat-datepicker-toggle matIconSuffix [for]="end"></mat-datepicker-toggle>
+                    <mat-datepicker #end></mat-datepicker>
+                </div>
+            </div>
+        </div>
+        <div formArrayName="greaterOfPlans">
+            <div *ngFor="let billingPlan of greaterOfPlans.controls; let i = index">
+                <div class="input-field-secondary" *ngIf="i!==0">
+                    <div>
+                        <input
+                            type="text"
+                            class="form-input-secondary"
+                            matInput
+                            [matAutocomplete]="operationTypeAutocomplete"
+                            [value]="billingPlan.value.operationType || operationTypes[0]"
+                        />
+                        <mat-autocomplete
+                            #operationTypeAutocomplete="matAutocomplete"
+                            (optionSelected)="onOperationTypeSelected($event, billingPlan)"
+                        >
+                            <mat-option *ngFor="let operationType of operationTypes" [value]="operationType">
+                                {{ operationType }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </div>
+                    <button
+                        class="btn-icon"
+                        type="button"
+                        (click)="removeNthPlan(i)"
+                    >
+                        <mat-icon svgIcon="close" class="icon-sm"></mat-icon>
+                    </button>
+                </div>
+                <div class="input-field">
+                    <mat-label>{{ translations['customerForm']['billingPlan'] }}</mat-label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        #input
+                        matInput
+                        (input)="searchQuery(i)"
+                        (focus)="searchQuery(i)"
+                        (blur)="onInputBlur(i)"
+                        [value]="billingPlan.value.name || ''"
+                        [matAutocomplete]="billingPlanAutoComplete"
+                        [ngClass]="{'error': isFieldInvalid('name', billingPlan)}"
+                    />
+                    <mat-autocomplete
+                        #billingPlanAutoComplete="matAutocomplete"
+                        (optionSelected)="planSelected($event, i)"
+                    >
+                        <mat-option *ngFor="let plan of billingPlanArray" [value]="plan.name">
+                            {{ plan.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </div>
+            </div>
+        </div>
+        <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="addBillingPlan()"
+        >
+            {{ translations['customerForm']['addBillingPlan'] }}
+        </button>
+    </div>
+</div>
+
+<ng-template #addContract>
+    <button
+        class="btn btn-primary all-centered"
+        type="button"
+        (click) = "toggleContractForm()"
+    >
+        {{ translations['customerForm']['addContract'] }}
+    </button>
+</ng-template>

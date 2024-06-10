@@ -1,0 +1,50 @@
+@use "../../../../app.component.scss" as *;
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    font-size: $normal-font-size;
+}
+
+h2 {
+    font-size: $header-font-size;
+}
+
+th:last-child,
+td:last-child {
+    width: 5%;
+}
+
+td,
+th {
+    padding: tu-gutter(0.5);
+    font-weight: normal;
+}
+
+input {
+    width: -webkit-fill-available;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    background-color: $blue-105;
+}
+
+thead {
+    background-color: $gray-115;
+}
+
+tbody {
+    background-color: $blue-105;
+}
+
+.error {
+    border-bottom: 1px solid $red-500;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.action-container {
+    padding: tu-gutter(1, 0);
+}

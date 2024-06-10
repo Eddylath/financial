@@ -1,0 +1,64 @@
+<form
+    [formGroup]="customerContractForm"
+    [attr.id]="formId"
+>
+    <div class="major">
+        <div class="minor">
+            <div class="input-field">
+                <mat-label>{{ translations['customerForm']['name'] }}</mat-label>
+                <input
+                    formControlName="name"
+                    [ngClass]="{'error': isFieldInvalid('name')}"
+                    class="form-input"
+                    placeholder="{{ translations['customerForm']['namePlaceholder'] }}"
+                    type="text"
+                    matInput
+                >
+            </div>
+            <div class="input-field">
+                <mat-label>{{ translations['customerForm']['businessId'] }}</mat-label>
+                <input
+                    formControlName="businessId"
+                    class="form-input"
+                    type="number"
+                    matInput
+                >
+            </div>
+            <div class="input-field">
+                <mat-label>{{ translations['customerForm']['primaryContact'] }}</mat-label>
+                <input
+                    formControlName="primaryContact"
+                    class="form-input"
+                    placeholder="{{ translations['customerForm']['primaryContactPlaceholder'] }}"
+                    type="text"
+                    matInput
+                >
+            </div>
+            <div class="input-field">
+                <mat-label>{{ translations['customerForm']['contactEmail'] }}</mat-label>
+                <input
+                    formControlName="contactEmail"
+                    [ngClass]="{'error': isFieldInvalid('contactEmail')}"
+                    class="form-input"
+                    placeholder="{{ translations['customerForm']['contactEmailPlaceholder'] }}"
+                    type="email"
+                    matInput
+                >
+            </div>
+        </div>
+        <div class="minor">
+            <tu-add-contract
+                [customerContractForm]="customerContractForm"
+                [contract]="customer?.contract"
+            >
+            </tu-add-contract>
+        </div>
+    </div>
+    <tu-form-actions
+        [formId]="formId"
+        [formGroup]="customerContractForm"
+        [valid]="isFormValid && isDirty()"
+        (cancelForm)="onCancel()"
+        (submitForm)="onSubmit()"
+    ></tu-form-actions>
+</form>

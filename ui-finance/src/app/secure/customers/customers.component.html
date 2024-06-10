@@ -1,0 +1,88 @@
+<div [formGroup]="customerFilters">
+    <div class="row topbar">
+        <div class="search-bar col-3">
+            <mat-icon fontIcon="search"></mat-icon>
+            <input
+                class="search-bar-input"
+                type="text"
+                formControlName="searchQuery"
+                matInput
+                placeholder="{{ translations['customerPage']['search'] }}"
+            />
+        </div>
+        <div class="filter-list col-2">
+            <mat-select
+                formControlName="statusFilter"
+                placeholder="{{ translations['common']['selectStatus'] }}"
+            >
+                <mat-select-trigger>{{ customerFilters.get('statusFilter')?.value }}</mat-select-trigger>
+                <mat-option *ngIf="customerFilters.get('statusFilter')?.value">
+                    {{ translations['common']['clear'] }}
+                </mat-option>
+                <mat-option
+                    *ngFor="let status of allStatuses"
+                    [value]="status.displayName"
+                >
+                    {{ status.displayName }}
+                </mat-option>
+              </mat-select>
+        </div>
+        <div class="col-1 end-button">
+            <button
+                type="button"
+                class="btn btn-primary"
+                (click)="createCustomerContract()"
+            >
+                {{ translations['customerPage']['addCustomer'] }}
+            </button>
+        </div>
+    </div>
+
+    <div class="data-table">
+        <table
+            class="master-table"
+            mat-table
+            [dataSource]="customersData"
+        >
+            <ng-container
+                matColumnDef="{{ col }}"
+                *ngFor="let col of displayedColumns;"
+                [ngSwitch]="col==='actions'"
+            >
+                <th mat-header-cell	*matHeaderCellDef>
+                    {{ translations['customerPage'][col] }}
+                </th>
+            
+                <td mat-cell *matCellDef="let customer">
+                    <span *ngSwitchCase="false">{{ customer[col] }}</span>
+                    <div class="align-end" *ngSwitchCase="true">
+                        <button
+                            class="btn-icon"
+                            [matMenuTriggerFor]="mainMenu"
+                        >
+                            <mat-icon fontIcon="more_vert"></mat-icon>
+                        </button>
+                        <mat-menu #mainMenu="matMenu">
+                            <button mat-menu-item (click)="editCustomer(customer)">
+                                {{ translations['common']['edit'] }}
+                            </button>
+                            <button mat-menu-item (click)="openTestModal(customer)">
+                                {{ translations['customerPage']['testContract'] }}
+                            </button>
+                        </mat-menu>
+                    </div>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+            #paginator
+            [pageSize]="pageSize"
+            [length]="customersLength"
+            (page)="loadMoreData($event)"
+        >
+        </mat-paginator>
+    </div>
+</div>

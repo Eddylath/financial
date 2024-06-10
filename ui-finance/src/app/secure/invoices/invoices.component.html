@@ -1,0 +1,30 @@
+<form
+    [formGroup]="businessDataForm"
+    [attr.id]="formId"
+>
+    <div class="major">
+        <!-- <div class="minor">
+        <div class="input-field">
+            <mat-label>{{ translations['customerForm']['name'] }}</mat-label>
+            <input
+                formControlName="businessIds"
+                class="form-input"
+                placeholder="{{ translations['customerForm']['namePlaceholder'] }}"
+                type="text"
+                matInput
+            >
+        </div>
+        <div class="input-field">
+            <mat-label>{{ translations['customerForm']['businessId'] }}</mat-label>
+            <input
+                formControlName="month"
+                class="form-input"
+                type="number"
+                matInput
+            >
+        </div></div> -->
+
+        <button class="btn btn-primary" style="width:fit-content;" type="button" (click)="downloadReport()">Download report</button>
+    </div>
+    
+</form>

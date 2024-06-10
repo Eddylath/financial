@@ -1,0 +1,91 @@
+<div [formGroup]="customerFilters">
+    <div class="row topbar">
+        <div class="search-bar col-3">
+            <mat-icon fontIcon="search"></mat-icon>
+            <input
+                class="search-bar-input"
+                type="text"
+                formControlName="searchQuery"
+                matInput
+                placeholder="{{ translations['billingPlanPage']['search'] }}"
+            />
+        </div>
+        <div class="filter-list col-2">
+            <mat-select
+                formControlName="statusFilter"
+                placeholder="{{ translations['common']['selectStatus'] }}"
+            >
+                <mat-select-trigger>{{ customerFilters.get('statusFilter')?.value }}</mat-select-trigger>
+                <mat-option *ngIf="customerFilters.get('statusFilter')?.value">
+                    {{ translations['common']['clear'] }}
+                </mat-option>
+                <mat-option
+                    *ngFor="let status of allStatuses"
+                    [value]="status.displayName"
+                >
+                    {{ status.displayName }}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="col-1 end-button">
+            <button
+                class="btn btn-primary"
+                type="button"
+                (click)="createBillingPlan()"
+            >
+                {{ translations['billingPlanPage']['addBillingPlan'] }}
+            </button>
+        </div>
+    </div>
+
+    <div class="data-table">
+        <table
+            class="master-table"
+            mat-table
+            [dataSource]="billingPlans"
+        >
+            <ng-container
+                matColumnDef="{{ col }}"
+                *ngFor="let col of displayedColumns;"
+                [ngSwitch]="col==='actions'"
+            >
+                <th mat-header-cell	*matHeaderCellDef>
+                    {{ translations['billingPlanPage'][col] }}
+                </th>
+                <td mat-cell *matCellDef="let plan">
+                    <span *ngSwitchCase="false">{{ plan[col] }}</span>
+                    <div class="align-end" *ngSwitchCase="true">
+                        <button
+                            class="btn-icon"
+                            [matMenuTriggerFor]="mainMenu"
+                        >
+                            <mat-icon fontIcon="more_vert"></mat-icon>
+                        </button>
+                        <mat-menu #mainMenu="matMenu">
+                            <button mat-menu-item (click)="editPlan(plan)">
+                                {{ translations['common']['edit'] }}
+                            </button>
+                            <button
+                                *ngIf="!plan.connectedBusiness.length"
+                                mat-menu-item
+                                (click)="deletePlan(plan)"
+                            >
+                                {{ translations['common']['delete'] }}
+                            </button>
+                        </mat-menu>
+                    </div>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+            #paginator
+            [pageSize]="pageSize"
+            [length]="billingPlansLength"
+            (page)="loadMoreData($event)"
+        >
+        </mat-paginator>
+    </div>
+</div>

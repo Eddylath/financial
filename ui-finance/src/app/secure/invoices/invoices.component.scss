@@ -1,0 +1,27 @@
+@use "../../app.component.scss" as *;
+
+// h1 {
+//     padding: $tu-gutter;
+// }
+.major {
+    display: flex;
+    flex-direction: column;
+    background: $form-div-background;
+    height: fit-content;
+    width: fit-content;
+    padding: tu-gutter(1.5);
+    margin: tu-gutter(1.5);
+    border: 1px solid $form-border-color;
+    border-radius: $form-border-radius-div;
+
+    .input-field {
+        width: 60%;
+    }
+}
+
+.minor {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    
+}

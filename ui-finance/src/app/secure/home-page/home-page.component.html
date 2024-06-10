@@ -1,0 +1,23 @@
+<mat-sidenav-container class="home-container">
+    <mat-sidenav mode="side" opened>
+        <img
+            class="header-image"
+            src="https://app.turvo.com/assets/uploads/production/92/tenant/tenant_92_primarylogo_1689659125583"
+        />
+        <mat-action-list>
+            <ng-container *ngFor="let route of routes">
+                <mat-list-item
+                    role="link"
+                    routerLinkActive="active"
+                    [routerLink]="getLink(route.name)"
+                >
+                    <mat-icon [svgIcon]="getIcon(route)"></mat-icon>
+                    <span class="list-name">{{translations['home'][route.name]}}</span>
+                </mat-list-item>
+            </ng-container>
+        </mat-action-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

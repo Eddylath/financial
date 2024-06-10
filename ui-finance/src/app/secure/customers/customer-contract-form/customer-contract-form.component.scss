@@ -1,0 +1,18 @@
+@use "../../../app.component.scss" as *;
+
+.major {
+    display: flex;
+    justify-content: space-between;
+    padding: $tu-gutter;
+}
+
+.minor {
+    width: 48%;
+    background: $form-div-background;
+    height: fit-content;
+    min-height: 370px;
+    position: relative;
+    padding: $tu-gutter;
+    border: 1px solid $form-border-color;
+    border-radius: $form-border-radius-div;
+}

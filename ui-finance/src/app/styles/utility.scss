@@ -1,0 +1,25 @@
+@import "./colors.scss";
+
+$tu-gutter: 16px;
+
+$form-div-background: $gray-105;
+$form-border-color: $gray-130;
+$form-border-radius-div: 10px;
+$form-border-radius-field: 6px;
+
+$normal-font-size: 14px;
+$header-font-size: 16px;
+$info-font-size: 12px;
+
+$form-primary-field-height: 44px;
+$form-secondary-field-height: 30px;
+
+@function tu-gutter ($top: 1, $other...) {
+    $result: $tu-gutter * $top;
+
+    @each $frac in $other {
+        $result: $result $tu-gutter * $frac;
+    }
+
+    @return $result;
+}

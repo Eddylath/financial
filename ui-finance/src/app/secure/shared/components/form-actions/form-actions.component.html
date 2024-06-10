@@ -1,0 +1,31 @@
+<div class="action-items">
+    <button
+        type="button"
+        class="btn btn-secondary"
+        [attr.data-fallback]="translations['common']['cancel']"
+        (click)="cancelForm.emit()"
+    >
+        <ng-content select="[form-cancel]"></ng-content>
+    </button>
+    <div class="btn-disabled-wrapper">
+        <button
+            type="submit"
+            [attr.form]="formId"
+            [attr.data-fallback]="translations['common']['save']"
+            [disabled]="!valid"
+            class="btn btn-primary"
+            [class.disabled]="!valid"
+            (click)="submitForm.emit()"
+        >
+            <ng-content select="[form-submit]"></ng-content>
+        </button>
+        <button
+            *ngIf="!valid"
+            type="button"
+            class="overlay btn"
+            [matTooltip]="translations['common']['invalidFormTooltip']"
+            matTooltipPosition="above"
+            (click)="markFormAsTouched()"
+        ></button>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+@use "../../../app.component.scss" as *;
+
+.minor {
+    background: $form-div-background;
+    height: fit-content;
+    padding: tu-gutter(1.5);
+    border: 1px solid $form-border-color;
+    border-radius: $form-border-radius-div;
+
+    .input-field {
+        width: 60%;
+    }
+}
+
+.major {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: tu-gutter(0.5);
+    row-gap: 16px;
+}

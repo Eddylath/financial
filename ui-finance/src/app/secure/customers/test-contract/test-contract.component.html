@@ -1,0 +1,105 @@
+<form
+    [formGroup]="testContractForm"
+    [attr.id]="formId"
+>
+    <div class="row">
+        <div class="input-field col-3">
+            <mat-label>{{ translations['testContractForm']['date'] }}</mat-label>
+            <div class="form-date" [ngClass]="{'error': isFieldInvalid('date')}">
+                <input
+                    class="form-date-input"
+                    formControlName="date"
+                    [matDatepicker]="start"
+                    placeholder="{{ translations['common']['monthPlaceholder'] }}"
+                    matInput
+                >
+                <mat-datepicker-toggle matIconSuffix [for]="start"></mat-datepicker-toggle>
+                <mat-datepicker
+                    #start
+                    startView="year"
+                    (monthSelected)="setMonthAndYear($event, start)"
+                    panelClass="month-picker"
+                ></mat-datepicker>
+            </div>
+        </div>
+        <div class="input-field col-3">
+            <mat-label>{{ translations['testContractForm']['day'] }}</mat-label>
+            <input
+                [ngClass]="{'error': isFieldInvalid('day')}"
+                class="form-input"
+                type="number"
+                formControlName="day"
+                matInput
+                readonly
+            >
+        </div>
+    </div>
+    <span *ngIf="userNote">{{ translations['testContractForm']['userNote'] + userNote }}</span>
+    <table>
+        <thead>
+            <ng-container *ngFor="let field of columnDisplayNames">
+                <th>{{ field }}</th>
+            </ng-container>
+        </thead>
+
+        <tbody>
+            <ng-container *ngFor="let entity of entities">
+                <tr [formGroup]="$any(testContractForm.get(entity.key || ''))">
+                    <td>
+                        {{ entity.displayName }}
+                    </td>
+                    <ng-container *ngFor="let column of columns">
+                        <td>
+                            <input
+                                matInput
+                                [ngClass]="{'error': isFieldInvalid(entity.key || '', column)}"
+                                pattern="[0-9]*"
+                                type="number"
+                                [formControl]="$any(testContractForm.get(entity.key || '')?.get(column))"
+                            />
+                        </td>
+                    </ng-container>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+    <table *ngIf="testContractResult">
+        <thead>
+            <th>{{ translations['testContractForm']['planName'] }}</th>
+            <th>{{ translations['testContractForm']['planCost'] }}</th>
+            <th>{{ translations['testContractForm']['selected'] }}</th>
+        </thead>
+        
+        <tbody>
+            <ng-container *ngFor="let oneOfPlans of testContractResult.plans; let last = last">
+                <ng-container *ngFor="let plan of oneOfPlans">
+                    <tr>
+                        <td>{{ plan.planName }}</td>
+                        <td>{{ plan.amount | currency }}</td>
+                        <td>{{ (plan.applied ? plan.amount : '') | currency }}</td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="!last">
+                    <td></td>
+                    <td></td>
+                    <td>{{ translations['common']['plus'] }}</td>
+                </tr>
+            </ng-container>
+            <tr>
+                <td></td>
+                <td>{{ translations['testContractForm']['totalAmount'] }}</td>
+                <td>{{ testContractResult.totalAmount | currency }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <tu-form-actions
+        [formId]="formId"
+        [formGroup]="testContractForm"
+        [valid]="isFormValid && isDirty()"
+        (cancelForm)="onCancel()"
+        (submitForm)="onSubmit()"
+    >
+        <ng-container form-submit>{{ translations['testContractForm']['testContract'] }}</ng-container>
+    </tu-form-actions>
+</form>

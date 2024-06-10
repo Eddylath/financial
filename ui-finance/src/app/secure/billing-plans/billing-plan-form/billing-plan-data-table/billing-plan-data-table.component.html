@@ -1,0 +1,86 @@
+<div
+    class="main"
+    [formGroup]="billingPlanForm"
+    *ngIf="billingPlanForm.get('modelName')?.value"
+>
+    <div
+        class="input-field"
+        *ngIf="billingPlanForm.get('cumulativeType')"
+    >
+        <mat-select class="atomic-dropdown" formControlName="cumulativeType">
+            <mat-select-trigger>{{ billingPlanForm.get('cumulativeType')?.value }}</mat-select-trigger>
+            <ng-container *ngFor="let period of cumulativePeriods">
+                <mat-option [value]="period.displayName">{{ period.displayName }}</mat-option>
+            </ng-container>
+        </mat-select>
+    </div>
+    <table>
+        <thead>
+            <ng-container *ngFor="let field of fields">
+                <th>{{ field.displayName }}</th>
+            </ng-container>
+            <th></th>
+        </thead>
+        <tbody>
+            <ng-container formArrayName="costPlans" *ngFor="let group of costPlans.controls; let i = index">
+                <tr [formGroupName]="i">
+                    <ng-container *ngFor="let field of fields; let j = index" [ngSwitch]="field.type">
+                        <ng-container *ngSwitchCase="'date'">
+                            <td *ngIf="field.key === 'from'">
+                                <input
+                                    matInput
+                                    [matDatepicker]="from" 
+                                    [ngClass]="{'error': isFieldInvalid(field.key, i)}"
+                                    formControlName="{{ field.key }}"
+                                    (click)="from.open()"
+                                />
+                                <mat-datepicker #from></mat-datepicker>
+                            </td>
+                            <td *ngIf="field.key === 'to'">
+                                <input
+                                    matInput
+                                    [matDatepicker]="to"
+                                    formControlName="{{ field.key }}"
+                                    [ngClass]="{'error': isFieldInvalid(field.key, i)}" 
+                                    (click)="to.open()"
+                                />
+                                <mat-datepicker #to></mat-datepicker>
+                            </td>
+                        </ng-container>
+                        <td *ngSwitchDefault >
+                            <div class="flex">
+                                <span *ngIf="field.dollarify">{{ translations['common']['dollarify'] }}</span>
+                                <input
+                                    matInput
+                                    [pattern]="field.decimel ? '':'[0-9]*'"
+                                    type="number"
+                                    min="0"
+                                    [ngClass]="{'error': isFieldInvalid(field.key, i)}"
+                                    formControlName="{{ field.key }}"
+                                />
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <td class="no-padding">
+                        <mat-icon
+                            *ngIf="i > 0"
+                            svgIcon="close"
+                            (click)="deleteRow(i)"
+                        ></mat-icon>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+    <div class="action-container">
+        <button
+            class="btn btn-secondary"
+            type="button"
+            (click)="addRow()"
+        >
+            {{ translations['billingPlanForm']['addRow'] }}
+        </button>
+    </div>
+</div>

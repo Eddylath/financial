@@ -1,0 +1,72 @@
+<form
+    [formGroup]="billingPlanForm"
+    [attr.id]="formId"
+>
+    <div class="major">
+        <div class="minor">
+            <div class="input-field">
+                <mat-label>{{ translations['billingPlanForm']['name'] }}</mat-label>
+                <input
+                    formControlName="name"
+                    [ngClass]="{'error': isFieldInvalid('name')}"
+                    class="form-input"
+                    placeholder="{{ translations['billingPlanForm']['namePlaceholder'] }}"
+                    type="text"
+                    matInput
+                >
+            </div>
+            <div class="input-field">
+                <mat-label>{{ translations['billingPlanForm']['billingUnit'] }}</mat-label>
+                <mat-select
+                    class="form-input"
+                    formControlName="billingUnit"
+                    [ngClass]="{'error': isFieldInvalid('billingUnit')}"
+                >
+                    <mat-select-trigger>{{ billingPlanForm.get('billingUnit')?.value }}</mat-select-trigger>
+                    <ng-container *ngFor="let unit of billingUnits">
+                        <mat-option [value]="unit.displayName">{{ unit.displayName }}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </div>
+            <div class="input-field">
+                <mat-label>{{ translations['billingPlanForm']['planType'] }}</mat-label>
+                <mat-select
+                    class="form-input"
+                    formControlName="modelName"
+                    [ngClass]="{'error': isFieldInvalid('modelName')}"
+                >
+                    <mat-select-trigger>{{ billingPlanForm.get('modelName')?.value }}</mat-select-trigger>
+                    <ng-container *ngFor="let model of planTypes">
+                        <mat-option
+                            [value]="model.displayName"
+                        >
+                            {{ model.displayName }}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            </div>
+        </div>
+        <tu-billing-plan-data-table
+            [billingPlanForm]="billingPlanForm"
+        ></tu-billing-plan-data-table>
+        <div class="input-field">
+            <mat-label>{{ translations['billingPlanForm']['status'] }}</mat-label>
+            <mat-select class="atomic-dropdown" formControlName="status">
+                <mat-select-trigger>{{ billingPlanForm.get('status')?.value }}</mat-select-trigger>
+                <mat-option
+                    *ngFor="let status of allStatuses"
+                    [value]="status.displayName"
+                >
+                	{{ status.displayName }}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <tu-form-actions
+        [formId]="formId"
+        [formGroup]="billingPlanForm"
+        [valid]="isFormValid && isDirty()"
+        (cancelForm)="onCancel()"
+        (submitForm)="onSubmit()"
+    ></tu-form-actions>
+</form>

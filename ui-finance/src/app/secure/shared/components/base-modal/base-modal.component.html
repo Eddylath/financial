@@ -1,0 +1,20 @@
+<div
+    class="modal-body"
+    [ngClass]="{'small-width': data.smallWidth}"
+>
+    <div class="modal-header">
+        <h1>{{ data.title }}</h1>
+        <button
+            class="btn-icon"
+            type="button"
+            (click)="close()"
+        >
+            <mat-icon svgIcon="close"></mat-icon>
+        </button>
+    </div>
+    <div class="tu-modal-content">
+        <mat-dialog-content class="mat-typography">
+            <ng-template #contentTemplate></ng-template>
+        </mat-dialog-content>
+    </div>
+</div>

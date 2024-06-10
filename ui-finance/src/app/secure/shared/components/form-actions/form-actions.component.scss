@@ -1,0 +1,36 @@
+@use "../../../../app.component.scss" as *;
+
+.action-items {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: tu-gutter(0.5);
+}
+
+.btn {
+     &:empty {
+        &:before {
+            content: attr(data-fallback);
+        }
+    }
+
+    &.disabled {
+        color: $gray-700;
+        border-color: transparent;
+        background: $gray-130;
+    }
+}
+
+.btn-disabled-wrapper {
+    position: relative;
+    display: inline-block;
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        cursor: pointer;
+        display: block;
+    }
+}
